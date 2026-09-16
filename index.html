@@ -12,6 +12,7 @@
       --bg: #fafaf7;
       --text: #1a1a1a;
       --muted: #6b6b6b;
+      --rule: #e6e6e0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
@@ -34,8 +35,69 @@
       margin-bottom: 24px;
     }
     .intro {
-      font-size: 17px;
+      font-size: 15px;
+      color: var(--muted);
       max-width: 480px;
+    }
+
+    /* Read more */
+    .read-more-btn {
+      margin-top: 16px;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .read-more-btn:hover { color: var(--text); }
+    .read-more-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .read-more-content.open { max-height: 600px; }
+    .read-more-content p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 16px;
+      max-width: 480px;
+    }
+
+    /* Left side tabs */
+    aside.tabs {
+      position: fixed;
+      top: 50%;
+      left: 32px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+    aside.tabs button {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.2s ease;
+    }
+    aside.tabs button:hover { color: var(--text); }
+    aside.tabs button.active { color: var(--text); font-weight: 500; }
+
+    /* Sections */
+    section { display: none; }
+    section.active { display: block; }
+    .placeholder {
+      font-size: 15px;
+      color: var(--muted);
     }
 
     /* Top-right icon dock */
@@ -63,27 +125,27 @@
       position: absolute;
       top: var(--y, 50%);
       left: var(--x, 50%);
-      width: 0;
-      height: 0;
+      width: 80px;
+      height: 80px;
       background: var(--text);
       border-radius: 999px;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
-    nav.dock a:hover {
-      color: var(--bg);
-    }
-    nav.dock a:hover .ink {
-      width: 80px;
-      height: 80px;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    nav.dock a svg {
-      position: relative;
-      z-index: 1;
-      width: 18px;
-      height: 18px;
+    nav.dock a:hover { color: var(--bg); }
+    nav.dock a:hover .ink { transform: translate(-50%, -50%) scale(1); }
+    nav.dock a svg { position: relative; z-index: 1; width: 18px; height: 18px; }
+
+    @media (max-width: 700px) {
+      aside.tabs {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        gap: 20px;
+        margin: 24px 32px 0;
+      }
+      main { padding-top: 80px; }
     }
   </style>
 </head>
@@ -110,20 +172,61 @@
     </a>
   </nav>
 
+  <aside class="tabs">
+    <button data-tab="me" class="active">me</button>
+    <button data-tab="projects">projects</button>
+    <button data-tab="videos">videos</button>
+  </aside>
+
   <main>
-    <h1>hi, i'm justin :)</h1>
-    <p class="intro">
-      i like building stuff. you can find things i've built and what i've learned from them here.
-    </p>
+    <section id="me" class="active">
+      <h1>hi, i'm justin :)</h1>
+      <p class="intro">
+        i like building stuff. you can find things i've built and what i've learned from them here.
+      </p>
+      <button class="read-more-btn" aria-expanded="false">read more</button>
+      <div class="read-more-content">
+        <p>[more about you here — what you're working on, your background, what excites you.]</p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h1>projects</h1>
+      <p class="placeholder">[projects coming soon]</p>
+    </section>
+
+    <section id="videos">
+      <h1>videos</h1>
+      <p class="placeholder">[videos coming soon]</p>
+    </section>
   </main>
 
   <script>
+    // Ink hover
     document.querySelectorAll('nav.dock a').forEach(el => {
       el.addEventListener('pointerenter', e => {
         const r = el.getBoundingClientRect();
         el.style.setProperty('--x', (e.clientX - r.left) + 'px');
         el.style.setProperty('--y', (e.clientY - r.top) + 'px');
       });
+    });
+
+    // Tab switching
+    document.querySelectorAll('aside.tabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.tab;
+        document.querySelectorAll('aside.tabs button').forEach(b => b.classList.toggle('active', b === btn));
+        document.querySelectorAll('main section').forEach(s => s.classList.toggle('active', s.id === id));
+      });
+    });
+
+    // Read more
+    const rmBtn = document.querySelector('.read-more-btn');
+    const rmContent = document.querySelector('.read-more-content');
+    rmBtn.addEventListener('click', () => {
+      const open = rmContent.classList.toggle('open');
+      rmBtn.textContent = open ? 'read less' : 'read more';
+      rmBtn.setAttribute('aria-expanded', open);
     });
   </script>
 </body>
