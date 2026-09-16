@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>justin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf7;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --rule: #e6e6e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 120px 32px 160px;
+    }
+    header { margin-bottom: 80px; }
+    h1 {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+    .intro {
+      font-size: 17px;
+      color: var(--text);
+      max-width: 480px;
+    }
+    section { margin-top: 72px; }
+    h2 {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    section p { color: var(--text); }
+    .project {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .project:last-child { border-bottom: none; }
+    .project-name { font-weight: 500; }
+    .project-desc { color: var(--muted); font-size: 15px; }
+    a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>justin</h1>
+      <p class="intro">
+        hi i'm justin. i like building stuff. you can find things i've built and what i've learned from them here.
+      </p>
+    </header>
+
+    <section>
+      <h2>Goal & Plan</h2>
+      <p>[your goal and plan goes here — a short paragraph about what you're working toward and how you're getting there.]</p>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="project">
+        <span class="project-name">project one</span>
+        <span class="project-desc">short description</span>
+      </div>
+      <div class="project">
+        <span class="project-name">project two</span>
+        <span class="project-desc">short description</span>
+      </div>
+      <div class="project">
+        <span class="project-name">project three</span>
+        <span class="project-desc">short description</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
